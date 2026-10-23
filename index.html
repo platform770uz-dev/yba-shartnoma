@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="uz-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1A2238">
+  <meta name="description" content="Yosh blogerlar akademiyasi ota-ona bilan onlayn shartnomasi">
+  <title>Ota-ona bilan shartnoma — Yosh blogerlar akademiyasi</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="brand"><div class="brand-mark" aria-hidden="true">YB</div><div><h1>Yosh blogerlar akademiyasi</h1><p>Ota-ona bilan shartnoma</p></div></header>
+    <div class="progress-wrap"><div class="progress-meta"><span id="stepLabel">1/5</span><span id="stepName">Boshlanish</span></div><div class="progress-track"><div id="progressBar" class="progress-fill"></div></div></div>
+    <div id="globalError" class="notice error" role="alert" hidden></div>
+    <section class="step active" data-step="1" aria-labelledby="welcomeTitle">
+      <p class="eyebrow">YOSH BLOGERLAR AKADEMIYASI</p><h2 id="welcomeTitle">Ota-ona bilan shartnoma</h2>
+      <p class="lead">Keyingi qadamlarda siz oʻzingiz va farzandingiz maʼlumotlarini kiritasiz, shartnoma bilan tanishasiz va imzo chizasiz.</p>
+      <div id="priceCard" class="price-card"><span>Oylik toʻlov</span><strong id="priceWelcome">—</strong></div>
+      <p id="priceError" class="field-error" role="alert" hidden>Havola notoʻgʻri. Administratorga murojaat qiling</p>
+      <div class="notice">Maʼlumotlaringiz ushbu brauzer oynasida vaqtincha saqlanadi. Imzolangan PDF sizga yuklab beriladi.</div>
+      <button id="startButton" class="button primary" disabled>Boshlash</button>
+    </section>
+    <section class="step" data-step="2" aria-labelledby="parentTitle" hidden>
+      <h2 id="parentTitle">Ota-ona maʼlumotlari</h2><p class="muted">Maydonlarni hujjatdagidek toʻldiring.</p>
+      <label for="parentName">F.I.Sh.</label><input id="parentName" autocomplete="name" inputmode="text" maxlength="120" placeholder="Masalan, Ali Valiyev"><small id="parentNameError" class="field-error"></small>
+      <label for="passport">Pasport seriyasi va raqami</label><input id="passport" autocomplete="off" autocapitalize="characters" maxlength="9" placeholder="AA1234567"><small id="passportError" class="field-error"></small>
+      <label for="phone">Telefon</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+998 90 123 45 67"><small id="phoneError" class="field-error"></small>
+    </section>
+    <section class="step" data-step="3" aria-labelledby="childTitle" hidden>
+      <h2 id="childTitle">Bola maʼlumotlari</h2>
+      <label for="childName">Bolaning F.I.Sh.</label><input id="childName" autocomplete="off" maxlength="120" placeholder="Masalan, Ali Valiyev"><small id="childNameError" class="field-error"></small>
+      <label for="childDob">Tugʻilgan sana</label><input id="childDob" type="date" autocomplete="bday"><small id="childDobError" class="field-error"></small>
+      <div id="ageError" class="notice error" role="alert" hidden>Kurs 7–14 yoshdagi bolalar uchun. Administrator bilan bogʻlaning.</div>
+    </section>
+    <section class="step contract-step" data-step="4" aria-labelledby="contractTitle" hidden>
+      <h2 id="contractTitle">Shartnoma bilan tanishing</h2>
+      <p class="muted">Shartnoma raqami: <strong id="contractNumber"></strong></p>
+      <p id="readHint" class="field-error">Shartnomani oxirigacha oʻqing</p>
+      <div id="contractBox" class="contract-box" tabindex="0" aria-label="Shartnoma matni"></div>
+      <div class="consents-block"><h3>2-ilova. Ommaviy joylashtirishga rozilik</h3><p>Har bir rozilik alohida va ixtiyoriy. Belgilanmagan band — rozilik berilmagan degani.</p><div id="consentChoices"></div></div>
+    </section>
+    <section class="step" data-step="5" aria-labelledby="signTitle" hidden>
+      <h2 id="signTitle">Imzo va yakunlash</h2><label class="check-row"><input id="acceptTerms" type="checkbox"><span>Shartnoma shartlari bilan tanishdim va roziman</span></label><small id="acceptError" class="field-error"></small>
+      <p class="muted">Imzoni barmoq yoki sichqoncha bilan chizing.</p><div class="signature-frame"><canvas id="signatureCanvas" aria-label="Ota-onaning imzosi"></canvas></div>
+      <div class="signature-actions"><button id="clearSignature" class="button secondary" type="button">Tozalash</button><small id="signatureError" class="field-error"></small></div>
+      <button id="signButton" class="button primary" type="button">Imzolash va yakunlash</button>
+      <p id="sendStatus" class="notice" hidden></p>
+    </section>
+    <section class="step" data-step="success" aria-labelledby="successTitle" hidden>
+      <div class="success-mark" aria-hidden="true">✓</div><h2 id="successTitle">Shartnoma imzolandi</h2>
+      <p class="muted">Shartnoma raqami: <strong id="successNumber"></strong></p>
+      <div class="notice">PDF nusxasini qurilmangizga saqlang.</div>
+      <button id="downloadPdf" class="button primary" type="button">PDF yuklab olish</button>
+      <button id="sharePdf" class="button secondary" type="button" hidden>Ulashish</button>
+    </section>
+    <nav class="nav-actions" aria-label="Qadamlar"><button id="backButton" class="button secondary" type="button" hidden>Orqaga</button><button id="nextButton" class="button primary" type="button" hidden>Davom etish</button></nav>
+    <footer>Yosh blogerlar akademiyasi</footer>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@5.1.3/dist/signature_pad.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
