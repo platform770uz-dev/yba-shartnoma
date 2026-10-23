@@ -1,0 +1,1 @@
+Additive migrations for the YBA contract site. Apply in timestamp order to Supabase project zamonaviy-kasblar. These files add isolated contract tables and policies; they do not replace existing CRM objects.
