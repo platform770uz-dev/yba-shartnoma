@@ -7,7 +7,7 @@
   async function loadContracts(){
     $("contractsRows").replaceChildren();$("emptyList").hidden=true;
     const {data,error}=await client.rpc("admin_list_contracts");
-    if(error){message("Bu hisobga administrator huquqi berilmagan yoki roʻyxatni yuklab boʻlmadi.",true);return}
+    if(error){$("adminPanel").hidden=true;$("loginPanel").hidden=false;message("Bu hisobga administrator huquqi berilmagan yoki roʻyxatni yuklab boʻlmadi.",true);return}
     if(!data?.length){$("emptyList").hidden=false;return}
     for(const row of data){
       const tr=document.createElement("tr"),values=[row.contract_number,row.status==="signed"?"Imzolangan":"Kutilmoqda",row.parent_name||"—",row.parent_phone||"—",new Date(row.signed_at||row.created_at).toLocaleString("uz-UZ",{timeZone:"Asia/Tashkent"})];
