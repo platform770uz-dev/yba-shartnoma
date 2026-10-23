@@ -16,7 +16,7 @@
     <section class="step active" data-step="1" aria-labelledby="welcomeTitle">
       <p class="eyebrow">YOSH BLOGERLAR AKADEMIYASI</p><h2 id="welcomeTitle">Ota-ona bilan shartnoma</h2>
       <p class="lead">Keyingi qadamlarda siz oʻzingiz va farzandingiz maʼlumotlarini kiritasiz, shartnoma bilan tanishasiz va imzo chizasiz.</p>
-      <div class="notice warning"><strong>Demo rejim:</strong> bu sinov versiyasida narx havola orqali olinadi va serverda saqlanmaydi. Haqiqiy shartnoma uchun foydalanmang.</div>
+      <div id="demoWarning" class="notice warning"><strong>Demo rejim:</strong> bu sinov versiyasida narx havola orqali olinadi va serverda saqlanmaydi. Haqiqiy shartnoma uchun foydalanmang.</div>
       <div id="priceCard" class="price-card"><span>Oylik toʻlov</span><strong id="priceWelcome">—</strong></div>
       <p id="priceError" class="field-error" role="alert" hidden>Havola notoʻgʻri. Administratorga murojaat qiling</p>
       <div class="notice">Maʼlumotlaringiz ushbu brauzer oynasida vaqtincha saqlanadi. Imzolangan PDF sizga yuklab beriladi.</div>
@@ -51,7 +51,7 @@
     <section class="step" data-step="success" aria-labelledby="successTitle" hidden>
       <div class="success-mark" aria-hidden="true">✓</div><h2 id="successTitle">Shartnoma imzolandi</h2>
       <p class="muted">Shartnoma raqami: <strong id="successNumber"></strong></p>
-      <div class="notice">PDF nusxasini qurilmangizga saqlang.</div>
+      <div id="successStatus" class="notice">PDF nusxasini qurilmangizga saqlang.</div>
       <button id="downloadPdf" class="button primary" type="button">PDF yuklab olish</button>
       <button id="sharePdf" class="button secondary" type="button" hidden>Ulashish</button>
     </section>
@@ -60,7 +60,9 @@
   </main>
   <script src="https://cdn.jsdelivr.net/npm/signature_pad@5.1.3/dist/signature_pad.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
   <script src="./config.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
+

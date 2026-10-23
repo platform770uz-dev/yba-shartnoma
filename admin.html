@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="uz-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1A2238">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Administrator — Yosh blogerlar akademiyasi</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="shell admin-shell">
+    <header class="brand"><div class="brand-mark" aria-hidden="true">YB</div><div><h1>Yosh blogerlar akademiyasi</h1><p>Administrator sahifasi</p></div></header>
+    <div id="adminMessage" class="notice" role="status" hidden></div>
+    <section id="loginPanel" class="step">
+      <h2>Administrator kirishi</h2>
+      <p class="muted">Shartnoma havolalarini yaratish uchun tizimga kiring.</p>
+      <label for="email">Elektron pochta</label><input id="email" type="email" autocomplete="username" inputmode="email" required>
+      <label for="password">Parol</label><input id="password" type="password" autocomplete="current-password" required>
+      <button id="loginButton" class="button primary full" type="button">Kirish</button>
+    </section>
+    <section id="adminPanel" class="step" hidden>
+      <div class="admin-title"><h2>Shartnomalar</h2><button id="logoutButton" class="button secondary" type="button">Chiqish</button></div>
+      <section class="admin-card">
+        <h3>Yangi shartnoma</h3>
+        <label for="monthlyPrice">Oylik toʻlov (soʻm)</label>
+        <input id="monthlyPrice" type="number" min="1" max="1000000000" step="1" inputmode="numeric" placeholder="Masalan, 400000">
+        <button id="createButton" class="button primary full" type="button">Havola va QR yaratish</button>
+        <div id="createdLink" class="created-link" hidden>
+          <p>Ota-onaga yuboriladigan havola:</p><a id="contractLink" target="_blank" rel="noopener"></a>
+          <canvas id="qrCanvas" aria-label="Shartnoma QR kodi"></canvas>
+          <button id="downloadQr" class="button secondary full" type="button">QR-kodni PNG sifatida yuklab olish</button>
+        </div>
+      </section>
+      <section class="admin-card">
+        <div class="admin-title"><h3>Shartnomalar roʻyxati</h3><button id="refreshButton" class="button secondary" type="button">Yangilash</button></div>
+        <div class="table-scroll"><table class="admin-table"><thead><tr><th>Raqam</th><th>Holat</th><th>Ota-ona</th><th>Telefon</th><th>Sana</th><th>PDF</th></tr></thead><tbody id="contractsRows"></tbody></table></div>
+        <p id="emptyList" class="muted" hidden>Hozircha shartnomalar yoʻq.</p>
+      </section>
+    </section>
+    <footer>Yosh blogerlar akademiyasi</footer>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <script src="./config.js"></script>
+  <script src="./admin.js"></script>
+</body>
+</html>

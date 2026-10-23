@@ -1,12 +1,26 @@
-# Yosh blogerlar akademiyasi — contract site (Phase 1)
+# Yosh blogerlar akademiyasi — contract site
 
-A static, browser-only contract draft. It renders `shartnoma.md`, collects parent and child data in `sessionStorage` during the current tab session, and produces the signed PDF locally. It does not send form data, passport data, signature strokes, or PDF to a server.
+The GitHub Pages site has a parent signing flow and a separate administrator page. Parent details remain in the current browser tab until submission. For a valid `?c=<uuid>` link, the app uploads the PDF to a private Supabase Storage bucket and submits the contract once through an RPC. The `?narx=` route remains only as a clearly labeled local demo; it is not an administrator-issued contract.
 
-## Before real use
+## Current service setup
 
-This is Phase 1 only. The `?narx=` amount is editable by anyone who changes the URL and is suitable for demonstration only. Do not use it for real parent signing or payments. Phase 2 must replace it with administrator-issued contract tokens and server-side price checks before real use.
+- Repository: `platform770uz-dev/yba-shartnoma`
+- Public page: `https://platform770uz-dev.github.io/yba-shartnoma/`
+- Admin page: `https://platform770uz-dev.github.io/yba-shartnoma/admin.html`
+- Supabase project: `zamonaviy-kasblar` (`uzivivmrixstxjvzkksz`)
+- The browser config contains only the Supabase URL and publishable key. Never put a service-role key or other secret in this repository.
+- New objects are isolated under `yba_contract_documents`, `yba_contract_admins`, and the private `shartnomalar` bucket. Existing CRM tables and functions are not used by this contract flow.
 
-The provided contract is an owner-supplied draft, not legal advice or a legal review. Have an Uzbekistan-qualified lawyer review the refund, termination, dispute venue, personal-data, and child-media clauses before collecting real signatures. Fill the legal/business blanks in `config.js` and `shartnoma.md` only after confirming the details.
+## Admin account setup (one account only)
+
+1. In Supabase **Authentication → Users**, create the one admin account with email and password. The admin page has sign-in only and no sign-up control.
+2. Copy that Auth user's UUID and, in SQL Editor, run: `insert into public.yba_contract_admins(user_id) values ('AUTH_USER_UUID');` The database index prevents a second allowlisted account.
+3. Open `admin.html`, sign in, enter the monthly price in soʻm, and choose **Havola va QR yaratish**. Send that link or QR to the parent.
+4. Signed contracts appear in the list. The PDF button generates an admin-only signed URL that expires after five minutes.
+
+The Storage bucket is private, accepts only PDF files up to 10 MB, and has no anonymous read policy. Parent data is written only when the parent finishes signing on an admin-issued `?c=` link. If PDF upload fails, the parent still gets the local PDF and the page asks them to send it to the administrator. Direct table reads by `anon` and `authenticated` are revoked; RPCs expose only the intended fields.
+
+The provided contract is an owner-supplied draft, not a legal review. Have an Uzbekistan-qualified lawyer review the refund, termination, dispute venue, personal-data, and child-media clauses before collecting real signatures. The contract includes an unreviewed no-refund clause. No data-retention purge policy has been configured; decide and implement one before production use.
 
 ## GitHub Pages
 
@@ -14,14 +28,15 @@ Repository: `platform770uz-dev/yba-shartnoma`.
 
 To publish: open **Settings → Pages**, select **Deploy from a branch**, choose **main** and **/(root)**, then save. The public demo link is `https://platform770uz-dev.github.io/yba-shartnoma/?narx=1500000` after Pages finishes deploying.
 
-Edit `config.js` to set the provider details, timetable, session duration, venue, and start date. Keep `shartnoma.md` as the source contract; review legal changes before use. The demo amount in the link is not protected and is not a valid production price mechanism.
+Edit `config.js` to set the provider details, timetable, session duration, venue, and start date. Keep `shartnoma.md` as the source contract; review legal changes before use. The public key in `config.js` is designed for browser use; no service-role key belongs in the site.
 
 ## Libraries
 
 - `signature_pad` 5.1.3
 - `jsPDF` 4.2.1
-- `qrcode` is reserved for the future admin page in Phase 2
+- `@supabase/supabase-js` 2.118.0
+- `qrcode` 1.5.4
 
 Noto Sans Regular and Bold are stored in `fonts/`; the SIL Open Font License is included as `fonts/OFL.txt`.
 
-No analytics or third-party trackers are included. Contract data is not put in URLs. Signature strokes are never saved in browser storage.
+No analytics or third-party trackers are included. Parent and child details and the signature are not put in URLs. Form fields are temporarily kept in `sessionStorage`; signature strokes are never saved in browser storage.
